@@ -4,6 +4,7 @@ services:
 
     mysql:
         image: mysql:5.7
+        command: --default-authentication-plugin=mysql_native_password
         container_name: laravel-cicd_mysql
         restart: unless-stopped
         ports:
@@ -12,9 +13,9 @@ services:
             - ./docker/mysql:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: mobile_shop
-            MYSQL_USER: app_user
-            MYSQL_PASSWORD: 123456
+            MYSQL_DATABASE: laravel-ci-cd
+            MYSQL_USER: "app_user"
+            MYSQL_PASSWORD: "123456"
         networks: 
             - backend
     
@@ -28,7 +29,7 @@ services:
             - mysql
             - redis
         volumes: 
-            - .:/var/www/html/big-project
+            - .:/var/www/html/laravel-ci
         networks: 
             - backend
             - frontend
@@ -46,7 +47,7 @@ services:
         image: nginx:latest
         container_name: laravel-cicd_nginx
         volumes: 
-            - .:/var/www/html/big-project
+            - .:/var/www/html/laravel-ci
             - ./docker/nginx_log:/var/log/nginx
             - ./docker/php-fpm/php-fpm.log:/var/log/php-fpm.log
             - ./docker/config/app.conf:/etc/nginx/conf.d/app.conf

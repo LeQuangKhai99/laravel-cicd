@@ -6,6 +6,9 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 
 RUN install-php-extensions gd pdo_mysql mysqli redis imagick zip
 
-WORKDIR /var/www/html/big-project
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - 
+RUN apt-get install -y nodejs
+
+WORKDIR /var/www/html/laravel-ci
 
 EXPOSE 9000
